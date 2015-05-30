@@ -1,0 +1,30 @@
+<%= form_for(@project.project_documents.build) do |f| %>
+  <% if @project_document.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@project_document.errors.count, "error") %> prohibited this project_document from being saved:</h2>
+
+      <ul>
+      <% @project_document.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :pmbok_doc_id %><br>
+    <%= f.collection_select(:pmbok_doc_id,  PmbokDoc.all, :id, :name) %>
+  </div>
+
+    <div class="field">
+      <%= f.hidden_field :project_id, :value => @project.id %>
+    </div>
+
+    <div class="field">
+      <%= f.label :document_name %><br>
+      <%= f.text_field :docname %>
+    </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

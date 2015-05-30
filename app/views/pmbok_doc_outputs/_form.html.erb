@@ -1,0 +1,33 @@
+<%= form_for(@pmbok_doc_output) do |f| %>
+  <% if @pmbok_doc_output.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@pmbok_doc_output.errors.count, "error") %> prohibited this pmbok_doc_output from being saved:</h2>
+
+      <ul>
+      <% @pmbok_doc_output.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :subprocess_group_id %><br>
+    <%= f.text_field :subprocess_group_id %>
+  </div>
+  <div class="field">
+    <%= f.label :document_id %><br>
+    <%= f.number_field :document_id %>
+  </div>
+  <div class="field">
+    <%= f.label :outputdocument_id %><br>
+    <%= f.number_field :outputdocument_id %>
+  </div>
+  <div class="field">
+    <%= f.label :task %><br>
+    <%= f.text_field :task %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

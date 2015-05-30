@@ -1,0 +1,29 @@
+<h1>Listing pmbok_doc_inputs</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Subprocess group</th>
+      <th>Document</th>
+      <th>Inputdocument</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @pmbok_doc_inputs.each do |pmbok_doc_input| %>
+      <tr>
+        <td><%= pmbok_doc_input.subprocess_group %></td>
+        <td><%= pmbok_doc_input.document_id %></td>
+        <td><%= pmbok_doc_input.inputdocument_id %></td>
+        <td><%= link_to 'Show', pmbok_doc_input %></td>
+        <td><%= link_to 'Edit', edit_pmbok_doc_input_path(pmbok_doc_input) %></td>
+        <td><%= link_to 'Destroy', pmbok_doc_input, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Pmbok doc input', new_pmbok_doc_input_path %>

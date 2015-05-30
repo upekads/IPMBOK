@@ -1,0 +1,31 @@
+<h1>Listing pmbok_doc_outputs</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Subprocess group</th>
+      <th>Document</th>
+      <th>Outputdocument</th>
+      <th>Task</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @pmbok_doc_outputs.each do |pmbok_doc_output| %>
+      <tr>
+        <td><%= pmbok_doc_output.subprocess_group %></td>
+        <td><%= pmbok_doc_output.document_id %></td>
+        <td><%= pmbok_doc_output.outputdocument_id %></td>
+        <td><%= pmbok_doc_output.task %></td>
+        <td><%= link_to 'Show', pmbok_doc_output %></td>
+        <td><%= link_to 'Edit', edit_pmbok_doc_output_path(pmbok_doc_output) %></td>
+        <td><%= link_to 'Destroy', pmbok_doc_output, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Pmbok doc output', new_pmbok_doc_output_path %>

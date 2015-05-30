@@ -1,0 +1,20 @@
+<div class="field">
+
+  <%= f.hidden_field :pmbok_doc_id , :value => @pmbok_doc.id %>
+</div>
+
+  <div class="field">
+    <%= f.hidden_field :user_id, :value => current_user.id %>
+  </div>
+
+
+<div class="field">
+
+
+
+
+  <%= f.file_field :document, class: 'filestyle',
+                   :'data-classButton' => 'btn btn-primary',
+                   :'data-input' => 'false', classIcon: 'icon-plus',
+                   :'data-buttonText' => 'Browse' %>
+</div>

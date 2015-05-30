@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Document Integration Management System - DIMS</title>
+  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+  <%= csrf_meta_tags %>
+</head>
+<body>
+<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+              data-target=".navbar-collapse">
+      </button>
+      <%link_to "IPMBoK",root_path, :class => "navbar-brand" %>
+      <%= link_to( image_tag( "/transparentlogo.gif", height:60,width:70),root_path, :class => "navbar-brand") %>
+    </div>
+    <div class="navbar-collapse collapse">
+      <ul class="nav navbar-nav navbar-left">
+
+        <% if isUserSigned? %>
+            <% if Role.is_administrator(session[:user_id]) %>
+                <li><%= link_to "Administrator panel", admin_root_path %></li>
+            <% end %>
+        <% end %>
+
+        <% if isUserSigned? %>
+            <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Manage<span class="caret"></span></a>
+              <ul class="dropdown-menu">
+                    <li><%= link_to "Project", projects_path %></li>
+                    <% if !Role.is_normal_user(session[:user_id]) %>
+                        <li><%= link_to "PMBoK Documents", pmbok_docs_path %></li>
+                    <% end %>
+
+               </ul>
+            </li>
+            <li><%= link_to "Search", "/search/index" %></li>
+            <% end %>
+
+        <% if isUserSigned? %>
+            <li><%= link_to "Sign out", logout_path %></li>
+        <% else %>
+            <li><%= link_to "Sign in", login_path %></li>
+        <% end %>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <% if isUserSigned? %>
+            <li style="color: white;">Welcome! <%= current_user.firstname %> <%= current_user.lastname %></li>
+        <% end %>
+      </ul>
+    </div>
+  </div>
+</nav>
+<%= yield %>
+
+
+</body>
+</html>

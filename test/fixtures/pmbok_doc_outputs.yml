@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  subprocess_group_id: 
+  document_id: 1
+  outputdocument_id: 1
+  task: MyString
+
+two:
+  subprocess_group_id: 
+  document_id: 1
+  outputdocument_id: 1
+  task: MyString

@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  subprocess_group_id: 
+  pmbok_doc_id: 
+  direction: MyString
+  direction_subprocess: MyString
+
+two:
+  subprocess_group_id: 
+  pmbok_doc_id: 
+  direction: MyString
+  direction_subprocess: MyString

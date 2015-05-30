@@ -1,0 +1,92 @@
+<div class="container">
+  <div class="page-header">
+    <h1>Project Details</h1>
+  </div>
+  <br>
+
+  <div class="well">
+    <div class="row">
+      <div class="col-lg-2" style="padding-bottom: 10px;">
+        <span><strong>Project_Code:</strong></span>
+      </div>
+      <div class="col-lg-4">
+        <span><%= @project.projectcode %></span>
+      </div>
+      <div class="col-lg-2">
+        <span><strong>Project name:</strong></span>
+      </div>
+      <div class="col-lg-3">
+        <span> <%= @project.name %></span>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-lg-2" style="padding-bottom: 10px;">
+        <span><strong>Start date:</strong></span>
+      </div>
+      <div class="col-lg-4">
+        <span><%= @project.start_date.strftime("%d/%m/%Y") %></span>
+      </div>
+      <div class="col-lg-2">
+        <span><strong>End date:</strong></span>
+      </div>
+      <div class="col-lg-3">
+        <span><%= @project.end_date.strftime("%d/%m/%Y") %></span>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-lg-2" style="padding-bottom: 10px;">
+        <span><strong>Status:</strong></span>
+      </div>
+      <div class="col-lg-4">
+        <span><%= @project.status %></span>
+      </div>
+      <div class="col-lg-2">
+        <span><strong>Description:</strong></span>
+      </div>
+      <div class="col-lg-3">
+        <span><%= @project.description %></span>
+      </div>
+    </div>
+  </div>
+
+  <% if @project_teams.size > 0 %>
+      <h4>Project Team</h4>
+      <table class="table table-hover table-striped">
+        <thead>
+        <tr>
+          <th colspan="4">Project Member name</th>
+          <th colspan="4">Email</th>
+          <th colspan="3">Role</th>
+
+        </tr>
+        </thead>
+
+        <tbody>
+        <% @project_teams.each do |ea| %>
+            <tr>
+              <td colspan="4" style="width: 30%" ><%= ea.user.firstname %> <%= ea.user.lastname %></td>
+              <td colspan="4" style="width: 30%" ><%= ea.user.email %></td>
+              <td colspan="3"><%= ea.project_role.rolename %></td>
+            </tr>
+        <% end %>
+
+        </tbody>
+      </table>
+  <% end %>
+
+  </br>
+
+
+
+
+  <div class="form-group">
+    <div class="col-lg-6  text-left">
+      <% if current_user.id == @project_manager_user[0] %>
+            <%= link_to 'Edit', edit_project_path(@project), :class => "btn btn-success", :method => :get %>
+      <% end %>
+            <%= link_to 'Back', projects_path, :class => "btn btn-danger", :method => :get %>
+    </div>
+    <div class="col-lg-6"></div>
+  </div>
+</div>
+</div>

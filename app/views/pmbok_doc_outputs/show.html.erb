@@ -1,0 +1,24 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Subprocess group:</strong>
+  <%= @pmbok_doc_output.subprocess_group %>
+</p>
+
+<p>
+  <strong>Document:</strong>
+  <%= @pmbok_doc_output.document_id %>
+</p>
+
+<p>
+  <strong>Outputdocument:</strong>
+  <%= @pmbok_doc_output.outputdocument_id %>
+</p>
+
+<p>
+  <strong>Task:</strong>
+  <%= @pmbok_doc_output.task %>
+</p>
+
+<%= link_to 'Edit', edit_pmbok_doc_output_path(@pmbok_doc_output) %> |
+<%= link_to 'Back', pmbok_doc_outputs_path %>

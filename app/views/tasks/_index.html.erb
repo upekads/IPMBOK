@@ -1,0 +1,55 @@
+
+
+<table class="table">
+  <thead>
+  <tr>
+    <th>Assigned To</th>
+    <th>Description</th>
+    <th>Status</th>
+    <th>Deadline</th>
+    <th colspan="2"></th>
+  </tr>
+  </thead>
+
+  <tbody>
+  <%@tasks=Task.where('project_document_id =?',project_document_id)%>
+
+  <% @tasks.each do |task| %>
+
+      <tr>
+        <% if current_user.id == @project_manager_user[0]%>
+        <td><%= User.find_by_id(task.assigned_id).email %></td>
+        <td><%= task.comment %></td>
+        <td><%= task.status %></td>
+        <td><%= task.deadline %></td>
+            <% if task.status =='Open'%>
+                <td><%= link_to 'Edit', edit_task_path(task) %></td>
+                <td><%= link_to 'Destroy', task, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+            <%end%>
+            <% if task.status=='File uploaded'%>
+                    <td><%= link_to 'Edit', edit_task_path(task) %></td>
+                <%end%>
+      </tr>
+
+       <% elsif current_user.id == task.assigned_id && task.status!='Completed'%>
+
+            <td><%= User.find_by_id(task.assigned_id).email %></td>
+            <td><%= task.comment %></td>
+            <td><%= task.status %></td>
+            <td><%= task.deadline %></td>
+       <% end %>
+          </tr>
+      <% end %>
+
+
+
+  </tbody>
+
+
+</table>
+
+
+
+<br>
+
+

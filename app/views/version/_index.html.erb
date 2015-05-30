@@ -1,0 +1,35 @@
+<% if !@document_version.nil? %>
+    <table class="table" width="80%">
+      <thead>
+      <tr>
+        <th width="40%">File name</th>
+        <td width="1%"></td>
+        <th width="40%">Uploaded by</th>
+        <td width="1%"></td>
+        <td width="1%"></td>
+        <td width="1%"></td>
+      </tr>
+      </thead>
+
+      <tbody>
+      <% @document_version.each do |dv| %>
+          <tr>
+            <td width="40%"><%= dv.docname %></td>
+            <td width="1%"></td>
+            <td width="10%"><%= User.find(dv.user_id).fullName %></td>
+            <td width="1%"></td>
+            <td width="5%">
+              <% if !dv.document_gid.nil? %>
+                  <%= button_to 'DOWNLOAD', getFileHistory_path(@project_document.project_id, (dv.document_gid.nil? ? '0' : dv.document_gid),dv.id), :method => :get, :class => "btn btn-primary btn-sm" %>
+              <% end %>
+            </td>
+            <td width="1%"></td>
+            <td width="5%"> <%= button_to 'RECOVERY', document_versions_recovery_path(@project_document.project_id, dv.project_document_id, dv.id), :method => :get, :class => "btn btn-primary btn-sm" %></td>
+          </tr>
+      <% end %>
+      </tbody>
+    </table>
+<% else %>
+    <span style="font-style: italic; color: lightcoral">No history for this document</span>
+<% end  %>
+

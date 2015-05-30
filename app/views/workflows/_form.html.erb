@@ -1,0 +1,33 @@
+<%= form_for(@workflow) do |f| %>
+  <% if @workflow.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@workflow.errors.count, "error") %> prohibited this workflow from being saved:</h2>
+
+      <ul>
+      <% @workflow.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :subprocess_group_id %><br>
+    <%= f.text_field :subprocess_group_id %>
+  </div>
+  <div class="field">
+    <%= f.label :pmbok_doc_id %><br>
+    <%= f.text_field :pmbok_doc_id %>
+  </div>
+  <div class="field">
+    <%= f.label :direction %><br>
+    <%= f.text_field :direction %>
+  </div>
+  <div class="field">
+    <%= f.label :direction_subprocess %><br>
+    <%= f.text_field :direction_subprocess %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

@@ -1,0 +1,33 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Subprocess Groups</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Code</th>
+      <th>Process group</th>
+      <th>Knowledge area</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @subprocess_groups.each do |subprocess_group| %>
+      <tr>
+        <td><%= subprocess_group.name %></td>
+        <td><%= subprocess_group.code %></td>
+        <td><%= subprocess_group.process_group.name %></td>
+        <td><%= subprocess_group.knowledge_area.name %></td>
+        <td><%= link_to 'Show', subprocess_group %></td>
+        <td><%= link_to 'Edit', edit_subprocess_group_path(subprocess_group) %></td>
+        <td><%= link_to 'Destroy', subprocess_group, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Subprocess group', new_subprocess_group_path %>

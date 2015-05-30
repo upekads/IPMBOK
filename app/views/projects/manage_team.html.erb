@@ -1,0 +1,107 @@
+<div class="container">
+  <div class="page-header">
+    <h1>Manage Team</h1>
+  </div>
+  <br>
+  <table class="table">
+    <tbody>
+    <tr>
+      <td style="width: 30%">Project_Code:</td>
+      <td><%= @project.projectcode %></td>
+    </tr>
+    <tr>
+      <td>Project_Name:</td>
+      <td><%= @project.name %></td>
+    </tr>
+
+    </tbody>
+  </table>
+  </br>
+
+
+ <div class="well">
+    <%= form_for(@project) do |f| %>
+        <% if @project.errors.any? %>
+            <div id="error_explanation">
+              <h2><%= pluralize(@project.errors.count, "error") %> prohibited this project from being saved:</h2>
+
+              <ul>
+                <% @project.errors.full_messages.each do |message| %>
+                    <li><%= message %></li>
+                <% end %>
+              </ul>
+            </div>
+        <% end %>
+
+        <% if @project.project_teams.size > 1 %>
+          <h4>Remove Project Members</h4>
+            <%= f.fields_for :project_teams do |eaf| %>
+                <% if !eaf.object.new_record? %>
+                   <table class="table">
+                     <tbody>
+                      <% if eaf.object.project_role.id!=1 %>
+                     <tr>
+                         <td style="border: none;"><%= eaf.check_box :_destroy, f: eaf %> &nbsp;&nbsp;&nbsp; <%= eaf.object.user.email %></td>
+                         <td style="border: none;"></td>
+                     </tr>
+                      <% end %>
+                     </tbody>
+                   </table>
+                <% end %>
+            <% end %>
+
+        <div class="actions">
+          <%= f.submit 'Remove Member' , :class => "btn btn-primary btn-sm active"%>
+        </div>
+      <%else%>
+          <span style="font-style: italic; color: lightcoral;">No project members have been added to the project yet</span>
+    <% end %>
+
+  </div>
+
+  <div class="well">
+    <h4>Add Project Members</h4>
+
+  <% end %>
+
+  </br>
+
+    <%= form_for(@project) do |f| %>
+        <%= f.fields_for :project_teams, @project.project_teams.build do |eaf| %>
+            <% if eaf.object.new_record? %>
+                <%= render '/project_teams/add_member_form', f: eaf %>
+            <% end %>
+        <% end %>
+        <div class="actions">
+            <%= f.submit 'Add Member', :class => "btn btn-primary btn-sm active" %>
+        </div>
+    <% end %>
+
+  </div>
+
+
+  <div class="well">
+  <h4>Change Project Manager</h4>
+
+    <%= form_for @project, :url => url_for(:controller => 'projects', :action => 'new_manager') do |f| %>
+        <%= f.fields_for :project_teams, @project_manager do |eaf| %>
+            <% if !eaf.object.new_record? %>
+                <%= render '/project_teams/change_manager_form', f: eaf %>
+            <% end %>
+        <% end %>
+
+        <div class="actions">
+          <%= f.submit 'Change Project Manager', :class => "btn btn-primary btn-sm active" %>
+        </div>
+    <% end %>
+
+  </div>
+
+
+  <%= button_to 'Back', projects_path, :class => "btn btn-danger", :method => :get %>
+  </br>
+
+</div>
+
+
+

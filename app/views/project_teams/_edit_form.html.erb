@@ -1,0 +1,14 @@
+<fieldset>
+  <div class="form-group">
+    <div class="col-lg-2"><%= f.label :Project_Member %></div>
+    <div class="col-lg-5"><%= f.collection_select(:user_id,  User.all, :id, :email) %></div>
+  </div>
+  <div class="field">
+    <%= f.hidden_field :project_id, :value => @project.id %>
+  </div>
+  <div class="field">
+    <%= f.hidden_field :project_role_id, :value => @project_member_role.id %>
+  </div>
+
+
+</fieldset>

@@ -1,0 +1,14 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Pmbok doc:</strong>
+  <%= @template.pmbok_doc %>
+</p>
+
+<p>
+  <strong>User:</strong>
+  <%= @template.user %>
+</p>
+
+<%= link_to 'Edit', edit_template_path(@template) %> |
+<%= link_to 'Back', templates_path %>

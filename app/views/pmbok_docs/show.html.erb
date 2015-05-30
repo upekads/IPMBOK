@@ -1,0 +1,109 @@
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        //console.log("Debug");
+
+        $('input[type=submit].btn.btn-primary.btn-sm').click(function(){
+
+            console.log(this)
+
+            var $this = $(this);
+            var badgePresence = $this.closest('form.edit_pmbok_doc').find('.bootstrap-filestyle.input-group .btn.btn-default > span.badge').size()
+
+            if(badgePresence < 1)
+            {
+                alert('No file selected!');
+                return false;
+            }
+        });
+
+    });
+
+</script>
+
+
+<div class="container">
+  <div class="page-header">
+    <table>
+
+      <tr>
+        <td><h1><%= @pmbok_doc.name %></h1></td>
+        <td width="1%"></td>
+        <td>
+
+          <%= form_for(@pmbok_doc) do |f| %>
+              <table>
+
+                <tr>
+                  <td style="padding-right: 10px;">
+                    <%= f.fields_for :templates, @pmbok_doc.templates.build, :html => {:multipart => true} do |eaf| %>
+                        <%= render '/templates/fields', f: eaf %>
+                        <!--<p>Max size 1 MB (pdf, jpg, png, jpeg, doc, docx, xls, xlsx, txt are allowed)</p>-->
+                    <% end %>
+                  </td>
+                  <td style="padding-right: 10px;">
+                    <%= f.submit 'UPLOAD', :class => "btn btn-primary btn-sm" %>
+                  </td>
+                </tr>
+              </table>
+          <% end %>
+        </td>
+
+        <td>
+
+          <% if @pmbok_doc.templates.size > 0 %>
+              <%= form_for(@pmbok_doc) do |f| %>
+                  <%= f.fields_for :templates do |eaf| %>
+                      <% if !eaf.object.new_record? %>
+                          <%= link_to 'DOWNLOAD', eaf.object.document.url(:original, false), :target => "_blank", :class => "btn btn-primary btn-sm" %>
+                      <% end %>
+                  <% end %>
+              <% end %>
+          <% end %>
+        </td>
+      </tr>
+
+    </table>
+
+
+  </div>
+  <br>
+
+
+  <h4> Belong to sub process group of:
+    <%= SubprocessGroup.find_by_id(@pmbok_doc.subprocess_group_id).code %>
+    -<%= SubprocessGroup.find_by_id(@pmbok_doc.subprocess_group_id).name %>
+
+  </h4>
+  </br>
+
+
+    <% if @pmbok_doc.templates.size > 1 %>
+      <div class="well">
+        <h4>Remove any template</h4>
+        <%= form_for(@pmbok_doc) do |f| %>
+            <table class="table">
+              <tbody>
+            <%= f.fields_for :templates do |eaf| %>
+                <% if !eaf.object.new_record? %>
+                      <tr>
+                        <td style="border: none; width: 35%;"><%= eaf.check_box :_destroy, f: eaf %> &nbsp; &nbsp;<%= link_to eaf.object.document_file_name, eaf.object.document.url(:original, false), :target => "_blank" %></td>
+                        <td style="border: none;">Uploaded by :  <%= User.find_by_id(eaf.object.user_id).email %></td>
+                      </tr>
+                <% end %>
+            <% end %>
+              </tbody>
+            </table>
+            <%= f.submit 'Delete Template', :class => "btn btn-primary btn-sm" %>
+            </div>
+        <% end %>
+    <% else %>
+      <div class="well">
+        <span style="font-style: italic; color: lightcoral;">No templates have been added to the document yet</span>
+      </div>
+    <% end %>
+
+
+  <%= button_to 'Back', pmbok_docs_path, :class => "btn btn-danger", :method => :get %>
+</div>
+

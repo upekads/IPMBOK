@@ -1,0 +1,15 @@
+<table class="table">
+  <tbody>
+      <tr>
+        <td style="border: none; width: 20%;"><%= f.label :Project_Member %></td>
+        <td style="border: none;"><%= f.collection_select(:user_id, User.all_without(@project_current_team), :id, :email) %></td>
+      </tr>
+  </tbody>
+</table>
+  <div class="field">
+    <%= f.hidden_field :project_id, :value => @project.id %>
+  </div>
+  <div class="field">
+    <%= f.hidden_field :project_role_id, :value => @project_member_role.id %>
+  </div>
+

@@ -1,0 +1,610 @@
+<div class="container">
+  <div class="page-header">
+    <h1>Manage Documents</h1>
+  </div>
+  <br>
+
+
+  <table class="table">
+    <tbody>
+    <tr>
+      <td style="width: 30%">Project_Code:</td>
+      <td><%= @project.projectcode %></td>
+    </tr>
+    <tr>
+      <td style="width: 30%">Project_Name:</td>
+      <td><%= @project.name %></td>
+    </tr>
+    </tbody>
+  </table>
+
+
+  </br>
+
+
+  <h4>Work Flow - Human Resource Management</h4>
+  <br>
+
+  <div align="center">
+    <table class="tg">
+      <tr>
+        <th class="tg-2ixt" colspan="2">9.1 Plan Human Resource Management</th>
+        <th class="tg-cxkv" rowspan="5"> >></th>
+        <th class="tg-2ixt" colspan="2">9.2 Acquire Project Team</th>
+        <th class="tg-cxkv" rowspan="7"> >></th>
+        <th class="tg-2ixt" colspan="2">9.3 Develop Project Team</th>
+        <th class="tg-cxkv" rowspan="7"> >></th>
+        <th class="tg-2ixt" colspan="2">9.4 Manage Project Team</th>
+      </tr>
+      <tr>
+        <td class="tg-s6z2">input</td>
+        <td class="tg-s6z2">output</td>
+        <td class="tg-s6z2">input</td>
+        <td class="tg-s6z2">output</td>
+        <td class="tg-s6z2">input</td>
+        <td class="tg-s6z2">output</td>
+        <td class="tg-s6z2">input</td>
+        <td class="tg-s6z2">output</td>
+      </tr>
+      <tr>
+        <td class="tg-lkh3">
+
+          <%= link_to 'Activity Resource Requirements', project_project_document_path(@project, @ARR.id) %>
+
+          </br>
+
+          <% if @ARR.status!=nil %>
+
+              <% if @ARR.status=='pending to initiate' %>
+
+                  <span class="glyphicon glyphicon-flag"></span>
+
+
+              <% elsif @ARR.status=='Task pending' %>
+
+                  <span class="glyphicon glyphicon-user"></span>
+
+
+              <% elsif @ARR.status=='File accepted' %>
+
+                  <span class="glyphicon glyphicon-list-alt"></span>
+
+
+              <% elsif @ARR.status=='Pending to check' %>
+
+                  <span class="glyphicon glyphicon-folder-open"></span>
+              <% end %>
+
+              
+
+              <% if (current_user.id == @project_manager_user[0] && @ARR.document_gid.nil? && Task.where('project_document_id =?', @ARR.id).where("status like ?", "%Open%").blank?) %>
+                  <%= link_to assign_create_path(:id => @ARR.id), method: :get, :class => "btn" do %>
+                      <span class="glyphicon glyphicon-list-alt" title="Assign Task"></span>
+                  <% end %>
+              <% end %>
+
+
+          <% end %>
+
+        </td>
+        <td class="tg-031e"></td>
+        <td class="tg-031e"></td>
+        <td class="tg-79v0">
+          <%= link_to 'Project Staff Assignments', project_project_document_path(@project, @PSA.id) %>
+
+          </br>
+
+          <% if @PSA.status!=nil %>
+
+              <% if @PSA.status=='pending to initiate' %>
+
+                  <span class="glyphicon glyphicon-flag"></span>
+
+
+              <% elsif @PSA.status=='Task pending' %>
+
+                  <span class="glyphicon glyphicon-user"></span>
+
+
+              <% elsif @PSA.status=='File accepted' %>
+
+                  <span class="glyphicon glyphicon-list-alt"></span>
+
+
+              <% elsif @PSA.status=='Pending to check' %>
+
+                  <span class="glyphicon glyphicon-folder-open"></span>
+              <% end %>
+
+              
+
+              <% if (current_user.id == @project_manager_user[0] && @PSA.document_gid.nil? && Task.where('project_document_id =?', @PSA.id).where("status like ?", "%Open%").blank?) %>
+                  <%= link_to assign_create_path(:id => @PSA.id), method: :get, :class => "btn" do %>
+                      <span class="glyphicon glyphicon-list-alt" title="Assign Task"></span>
+                  <% end %>
+              <% end %>
+
+          <% end %>
+        </td>
+        <td class="tg-79v0">
+          <%= link_to 'Project Staff Assignments', project_project_document_path(@project, @PSA.id) %>
+
+          </br>
+
+          <% if @PSA.status!=nil %>
+
+              <% if @PSA.status=='pending to initiate' %>
+
+                  <span class="glyphicon glyphicon-flag"></span>
+
+
+              <% elsif @PSA.status=='Task pending' %>
+
+                  <span class="glyphicon glyphicon-user"></span>
+
+
+              <% elsif @PSA.status=='File accepted' %>
+
+                  <span class="glyphicon glyphicon-list-alt"></span>
+
+
+              <% elsif @PSA.status=='Pending to check' %>
+
+                  <span class="glyphicon glyphicon-folder-open"></span>
+              <% end %>
+
+              
+
+              <% if (current_user.id == @project_manager_user[0] && @PSA.document_gid.nil? && Task.where('project_document_id =?', @PSA.id).where("status like ?", "%Open%").blank?) %>
+                  <%= link_to assign_create_path(:id => @PSA.id), method: :get, :class => "btn" do %>
+                      <span class="glyphicon glyphicon-list-alt" title="Assign Task"></span>
+                  <% end %>
+              <% end %>
+
+          <% end %>
+
+        </td>
+        <td class="tg-031e" rowspan="2"></td>
+        <td class="tg-79v0">
+          <%= link_to 'Project Staff Assignments', project_project_document_path(@project, @PSA.id) %>
+
+          </br>
+
+          <% if @PSA.status!=nil %>
+
+              <% if @PSA.status=='pending to initiate' %>
+
+                  <span class="glyphicon glyphicon-flag"></span>
+
+
+              <% elsif @PSA.status=='Task pending' %>
+
+                  <span class="glyphicon glyphicon-user"></span>
+
+
+              <% elsif @PSA.status=='File accepted' %>
+
+                  <span class="glyphicon glyphicon-list-alt"></span>
+
+
+              <% elsif @PSA.status=='Pending to check' %>
+
+                  <span class="glyphicon glyphicon-folder-open"></span>
+              <% end %>
+
+              
+
+              <% if (current_user.id == @project_manager_user[0] && @PSA.document_gid.nil? && Task.where('project_document_id =?', @PSA.id).where("status like ?", "%Open%").blank?) %>
+                  <%= link_to assign_create_path(:id => @PSA.id), method: :get, :class => "btn" do %>
+                      <span class="glyphicon glyphicon-list-alt" title="Assign Task"></span>
+                  <% end %>
+              <% end %>
+
+          <% end %>
+        </td>
+        <td class="tg-031e" rowspan="2"></td>
+      </tr>
+      <tr>
+        <td class="tg-031e"></td>
+        <td class="tg-xxs3">
+          <%= link_to 'HRM Plan', project_project_document_path(@project, @HRMP.id) %>
+
+          </br>
+
+          <% if @HRMP.status!=nil %>
+
+              <% if @HRMP.status=='pending to initiate' %>
+
+                  <span class="glyphicon glyphicon-flag"></span>
+
+
+              <% elsif @HRMP.status=='Task pending' %>
+
+                  <span class="glyphicon glyphicon-user"></span>
+
+
+              <% elsif @HRMP.status=='File accepted' %>
+
+                  <span class="glyphicon glyphicon-list-alt"></span>
+
+
+              <% elsif @HRMP.status=='Pending to check' %>
+
+                  <span class="glyphicon glyphicon-folder-open"></span>
+              <% end %>
+
+              
+
+              <% if (current_user.id == @project_manager_user[0] && @HRMP.document_gid.nil? && Task.where('project_document_id =?', @HRMP.id).where("status like ?", "%Open%").blank?) %>
+                  <%= link_to assign_create_path(:id => @HRMP.id), method: :get, :class => "btn" do %>
+                      <span class="glyphicon glyphicon-list-alt" title="Assign Task"></span>
+                  <% end %>
+              <% end %>
+
+          <% end %>
+        </td>
+        <td class="tg-xxs3">
+          <%= link_to 'HRM Plan', project_project_document_path(@project, @HRMP.id) %>
+
+          </br>
+
+          <% if @HRMP.status!=nil %>
+
+              <% if @HRMP.status=='pending to initiate' %>
+
+                  <span class="glyphicon glyphicon-flag"></span>
+
+
+              <% elsif @HRMP.status=='Task pending' %>
+
+                  <span class="glyphicon glyphicon-user"></span>
+
+
+              <% elsif @HRMP.status=='File accepted' %>
+
+                  <span class="glyphicon glyphicon-list-alt"></span>
+
+
+              <% elsif @HRMP.status=='Pending to check' %>
+
+                  <span class="glyphicon glyphicon-folder-open"></span>
+              <% end %>
+
+              
+
+              <% if (current_user.id == @project_manager_user[0] && @PSA.document_gid.nil? && Task.where('project_document_id =?', @HRMP.id).where("status like ?", "%Open%").blank?) %>
+                  <%= link_to assign_create_path(:id => @HRMP.id), method: :get, :class => "btn" do %>
+                      <span class="glyphicon glyphicon-list-alt" title="Assign Task"></span>
+                  <% end %>
+              <% end %>
+
+          <% end %>
+
+        </td>
+        <td class="tg-031e"></td>
+        <td class="tg-031e"></td>
+        <td class="tg-031e"></td>
+      </tr>
+      <tr>
+        <td class="tg-7q1t">
+          <%= link_to 'Project Management Plan', project_project_document_path(@project, @PMP.id) %>
+
+          </br>
+
+          <% if @PMP.status!=nil %>
+
+              <% if @PMP.status=='pending to initiate' %>
+
+                  <span class="glyphicon glyphicon-flag"></span>
+
+
+              <% elsif @PMP.status=='Task pending' %>
+
+                  <span class="glyphicon glyphicon-user"></span>
+
+
+              <% elsif @PMP.status=='File accepted' %>
+
+                  <span class="glyphicon glyphicon-list-alt"></span>
+
+
+              <% elsif @PMP.status=='Pending to check' %>
+
+                  <span class="glyphicon glyphicon-folder-open"></span>
+              <% end %>
+
+              
+
+              <% if (current_user.id == @project_manager_user[0] && @PMP.document_gid.nil? && Task.where('project_document_id =?', @PMP.id).where("status like ?", "%Open%").blank?) %>
+                  <%= link_to assign_create_path(:id => @PMP.id), method: :get, :class => "btn" do %>
+                      <span class="glyphicon glyphicon-list-alt" title="Assign Task"></span>
+                  <% end %>
+              <% end %>
+
+          <% end %>
+        </td>
+        <td class="tg-031e"></td>
+        <td class="tg-031e"></td>
+        <td class="tg-rpj7">
+          <%= link_to 'Resource Calendars', project_project_document_path(@project, @RCAL.id) %>
+
+          </br>
+
+          <% if @ARR.status!=nil %>
+
+              <% if @RCAL.status=='pending to initiate' %>
+
+                  <span class="glyphicon glyphicon-flag"></span>
+
+
+              <% elsif @RCAL.status=='Task pending' %>
+
+                  <span class="glyphicon glyphicon-user"></span>
+
+
+              <% elsif @RCAL.status=='File accepted' %>
+
+                  <span class="glyphicon glyphicon-list-alt"></span>
+
+
+              <% elsif @RCAL.status=='Pending to check' %>
+
+                  <span class="glyphicon glyphicon-folder-open"></span>
+              <% end %>
+
+              
+
+              <% if (current_user.id == @project_manager_user[0] && @RCAL.document_gid.nil? && Task.where('project_document_id =?', @RCAL.id).where("status like ?", "%Open%").blank?) %>
+                  <%= link_to assign_create_path(:id => @RCAL.id), method: :get, :class => "btn" do %>
+                      <span class="glyphicon glyphicon-list-alt" title="Assign Task"></span>
+                  <% end %>
+              <% end %>
+
+          <% end %>
+        </td>
+        <td class="tg-rpj7">
+          <%= link_to 'Resource Calendars', project_project_document_path(@project, @RCAL.id) %>
+
+          </br>
+
+          <% if @RCAL.status!=nil %>
+
+              <% if @RCAL.status=='pending to initiate' %>
+
+                  <span class="glyphicon glyphicon-flag"></span>
+
+
+              <% elsif @RCAL.status=='Task pending' %>
+
+                  <span class="glyphicon glyphicon-user"></span>
+
+
+              <% elsif @RCAL.status=='File accepted' %>
+
+                  <span class="glyphicon glyphicon-list-alt"></span>
+
+
+              <% elsif @RCAL.status=='Pending to check' %>
+
+                  <span class="glyphicon glyphicon-folder-open"></span>
+              <% end %>
+
+              
+
+              <% if (current_user.id == @project_manager_user[0] && @RCAL.document_gid.nil? && Task.where('project_document_id =?', @RCAL.id).where("status like ?", "%Open%").blank?) %>
+                  <%= link_to assign_create_path(:id => @RCAL.id), method: :get, :class => "btn" do %>
+                      <span class="glyphicon glyphicon-list-alt" title="Assign Task"></span>
+                  <% end %>
+              <% end %>
+
+          <% end %>
+        </td>
+        <td class="tg-3ope">
+          <%= link_to 'Team Performance Assessments', project_project_document_path(@project, @TPA.id) %>
+
+          </br>
+
+          <% if @TPA.status!=nil %>
+
+              <% if @TPA.status=='pending to initiate' %>
+
+                  <span class="glyphicon glyphicon-flag"></span>
+
+
+              <% elsif @TPA.status=='Task pending' %>
+
+                  <span class="glyphicon glyphicon-user"></span>
+
+
+              <% elsif @TPA.status=='File accepted' %>
+
+                  <span class="glyphicon glyphicon-list-alt"></span>
+
+
+              <% elsif @TPA.status=='Pending to check' %>
+
+                  <span class="glyphicon glyphicon-folder-open"></span>
+              <% end %>
+
+              
+
+              <% if (current_user.id == @project_manager_user[0] && @TPA.document_gid.nil? && Task.where('project_document_id =?', @TPA.id).where("status like ?", "%Open%").blank?) %>
+                  <%= link_to assign_create_path(:id => @TPA.id), method: :get, :class => "btn" do %>
+                      <span class="glyphicon glyphicon-list-alt" title="Assign Task"></span>
+                  <% end %>
+              <% end %>
+
+          <% end %>
+        </td>
+        <td class="tg-3ope">
+          <%= link_to 'Team Performance Assessments', project_project_document_path(@project, @TPA.id) %>
+
+          </br>
+
+          <% if @TPA.status!=nil %>
+
+              <% if @TPA.status=='pending to initiate' %>
+
+                  <span class="glyphicon glyphicon-flag"></span>
+
+
+              <% elsif @TPA.status=='Task pending' %>
+
+                  <span class="glyphicon glyphicon-user"></span>
+
+
+              <% elsif @TPA.status=='File accepted' %>
+
+                  <span class="glyphicon glyphicon-list-alt"></span>
+
+
+              <% elsif @TPA.status=='Pending to check' %>
+
+                  <span class="glyphicon glyphicon-folder-open"></span>
+              <% end %>
+
+              
+
+              <% if (current_user.id == @project_manager_user[0] && @TPA.document_gid.nil? && Task.where('project_document_id =?', @TPA.id).where("status like ?", "%Open%").blank?) %>
+                  <%= link_to assign_create_path(:id => @TPA.id), method: :get, :class => "btn" do %>
+                      <span class="glyphicon glyphicon-list-alt" title="Assign Task"></span>
+                  <% end %>
+              <% end %>
+
+          <% end %>
+        </td>
+        <td class="tg-7q1t">
+          <%= link_to 'Project Management Plan', project_project_document_path(@project, @PMP.id) %>
+
+          </br>
+
+          <% if @PMP.status!=nil %>
+
+              <% if @PMP.status=='pending to initiate' %>
+
+                  <span class="glyphicon glyphicon-flag"></span>
+
+
+              <% elsif @PMP.status=='Task pending' %>
+
+                  <span class="glyphicon glyphicon-user"></span>
+
+
+              <% elsif @PMP.status=='File accepted' %>
+
+                  <span class="glyphicon glyphicon-list-alt"></span>
+
+
+              <% elsif @PMP.status=='Pending to check' %>
+
+                  <span class="glyphicon glyphicon-folder-open"></span>
+              <% end %>
+
+              
+
+              <% if (current_user.id == @project_manager_user[0] && @PMP.document_gid.nil? && Task.where('project_document_id =?', @PMP.id).where("status like ?", "%Open%").blank?) %>
+                  <%= link_to assign_create_path(:id => @PMP.id), method: :get, :class => "btn" do %>
+                      <span class="glyphicon glyphicon-list-alt" title="Assign Task"></span>
+                  <% end %>
+              <% end %>
+
+          <% end %>
+        </td>
+      </tr>
+      <tr>
+        <td class="tg-cxkv" colspan="5" rowspan="2"></td>
+        <td class="tg-031e"></td>
+        <td class="tg-031e" rowspan="2"></td>
+        <td class="tg-031e"></td>
+        <td class="tg-031e" rowspan="2"></td>
+      </tr>
+      <tr>
+        <td class="tg-xxs3">
+          <%= link_to 'HRM Plan', project_project_document_path(@project, @HRMP) %>
+
+          </br>
+
+          <% if @HRMP.status!=nil %>
+
+              <% if @HRMP.status=='pending to initiate' %>
+
+                  <span class="glyphicon glyphicon-flag"></span>
+
+
+              <% elsif @HRMP.status=='Task pending' %>
+
+                  <span class="glyphicon glyphicon-user"></span>
+
+
+              <% elsif @HRMP.status=='File accepted' %>
+
+                  <span class="glyphicon glyphicon-list-alt"></span>
+
+
+              <% elsif @HRMP.status=='Pending to check' %>
+
+                  <span class="glyphicon glyphicon-folder-open"></span>
+              <% end %>
+
+              
+
+              <% if (current_user.id == @project_manager_user[0] && @HRMP.document_gid.nil? && Task.where('project_document_id =?', @HRMP.id).where("status like ?", "%Open%").blank?) %>
+                  <%= link_to assign_create_path(:id => @HRMP.id), method: :get, :class => "btn" do %>
+                      <span class="glyphicon glyphicon-list-alt" title="Assign Task"></span>
+                  <% end %>
+              <% end %>
+
+          <% end %>
+
+        </td>
+        <td class="tg-xxs3">
+          <%= link_to 'HRM Plan', project_project_document_path(@project, @HRMP) %>
+
+          </br>
+
+          <% if @HRMP.status!=nil %>
+
+              <% if @HRMP.status=='pending to initiate' %>
+
+                  <span class="glyphicon glyphicon-flag"></span>
+
+
+              <% elsif @HRMP.status=='Task pending' %>
+
+                  <span class="glyphicon glyphicon-user"></span>
+
+
+              <% elsif @HRMP.status=='File accepted' %>
+
+                  <span class="glyphicon glyphicon-list-alt"></span>
+
+
+              <% elsif @HRMP.status=='Pending to check' %>
+
+                  <span class="glyphicon glyphicon-folder-open"></span>
+              <% end %>
+
+              
+
+              <% if (current_user.id == @project_manager_user[0] && @HRMP.document_gid.nil? && Task.where('project_document_id =?', @HRMP.id).where("status like ?", "%Open%").blank?) %>
+                  <%= link_to assign_create_path(:id => @HRMP.id), method: :get, :class => "btn" do %>
+                      <span class="glyphicon glyphicon-list-alt" title="Assign Task"></span>
+                  <% end %>
+              <% end %>
+
+          <% end %>
+
+        </td>
+      </tr>
+    </table>
+
+  </div>
+  </br>
+
+
+
+
+
+  <%= button_to 'Back', projects_path, :class => "btn btn-danger", :method => :get %>
+  </br>
+</div>

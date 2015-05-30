@@ -1,0 +1,25 @@
+<div class="container">
+  <div class="page-header">
+    <h1>Projects</h1>
+  </div>
+  <br>
+
+<p>
+  <strong>Project document:</strong>
+  <%= @task.project_document %>
+</p>
+
+<p>
+  <strong>Assigned By</strong>
+
+  <%= User.find_by_id(@task.assignee_id).email%>
+</p>
+
+<p>
+  <strong>Assigned To</strong>
+
+  <%= User.find_by_id(@task.assigned_id).email%>
+</p>
+
+
+    </div>

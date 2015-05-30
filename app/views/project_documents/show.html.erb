@@ -1,0 +1,284 @@
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        //console.log("Debug");
+
+        $('input[type=submit].btn.btn-success').click(function(){
+
+            var $this = $(this);
+            var badgePresence = $this.closest('form.new_data_file').find('.bootstrap-filestyle.input-group .btn.btn-default > span.badge').size();
+
+            if(badgePresence < 1)
+            {
+                alert('No file selected!');
+                return false;
+            }
+        });
+
+    });
+
+</script>
+
+<div class="container">
+  <div class="page-header">
+
+
+
+
+
+    <table>
+      <tr>
+        <td style="padding-right: 10px;"><h1><%= @project_document.docname %></h1></td>
+        <td width="1%"></td>
+        <td>
+          <%-# Upload button is visible to the project manager only if no task is available for this document OR -%>
+          <%-# No task is available in 'OPen' or 'Uploaded' status for this document-%>
+          <%-# Then he can upload the file or assign to create/update the document to another project member-%>
+
+          <%-# If there is a task assgined to me and status is 'Open' or 'Uploaded' then me too can see the upload button-%>
+
+
+          <% if
+          (current_user.id == @project_manager_user[0] && Task.where('project_document_id =?',@project_document.id).blank?) ||
+          (current_user.id == @project_manager_user[0] && Task.where('project_document_id =?',@project_document.id).where("status like ?","%Open%").blank?) ||
+          (current_user.id != @project_manager_user[0] && !Task.where('assigned_id =?',current_user.id).where('project_document_id =?',@project_document.id).where("status like ?","%Open%").blank?)
+
+              %>
+
+
+
+
+          <div class="input-group">
+            <div class="form-inline">
+              <%= form_for @dataFile, :url => data_file_create_path(@project.id, @project_document.id), :html => {:multipart => true} do |f| %>
+                  <%= f.file_field :document, class: 'filestyle',
+                                   :'data-classButton' => 'btn btn-primary',
+                                   :'data-input' => 'false', classIcon: 'icon-plus',
+                                   :'data-buttonText' => 'Browse' %>
+                  <%= f.submit 'UPLOAD',   :class => "btn btn-success" %>
+              <% end %>
+            </div>
+          </div>
+
+        </td>
+
+
+              <td width="1%"></td>
+        <td>
+          <% if (current_user.id == @project_manager_user[0] && @project_document.document_gid.nil? && Task.where('project_document_id =?',@project_document.id).where("status like ?","%Open%").blank?) %>
+              <%= button_to 'Assign to create', assign_create_path(:id => @project_document.id), :method => :get, :class => "btn btn-primary" %>
+              <% end %>
+          <% if (current_user.id == @project_manager_user[0] &&!@project_document.document_gid.nil? && Task.where('project_document_id =?',@project_document.id).where("status like ?","%Open%").blank?)%>
+                  <%= button_to 'Assign to Update', assign_create_path(:id => @project_document.id), :method => :get, :class => "btn btn-primary" %>
+              <% end %>
+
+        </td>
+        <%else %>
+              <td width="1%"></td>
+              <td>
+
+                <% if
+                   (current_user.id != @project_manager_user[0] && Task.where('assigned_id =?',current_user.id).where('project_document_id =?',@project_document.id).where("status like ?","%Open%").blank?)
+                %>
+                    <span style="font-style: italic; color: lightcoral;">No tasks are pending for you on this document</span>
+                <%else%>
+                    <span style="font-style: italic; color: lightcoral;">One Task is Open for this document.</span>
+                <%end%>
+              </td>
+
+
+        <% end %>
+
+
+          <td width="1%"></td>
+          <td>
+            <% if !@project_document.document_gid.nil? %>
+                <%= button_to 'DOWNLOAD', gitFile_path(@project.id, @project_document.document_gid.nil? ? '0' : @project_document.document_gid), :method => :get, :class => "btn btn-primary" %>
+            <% end %>
+          </td>
+
+      </tr>
+
+    </table>
+
+  </div>
+
+  <div class="well">
+    <div class="row">
+      <div class="col-lg-2" style="padding-bottom: 10px;">
+        <span><strong>Project:</strong></span>
+      </div>
+      <div class="col-lg-4">
+        <span><%= @project_document.project.projectcode %> - <%= @project_document.project.name %></span>
+      </div>
+      <div class="col-lg-2">
+        <span><strong>PMBok doc type:</strong></span>
+      </div>
+      <div class="col-lg-3">
+        <span> <%= @project_document.pmbok_doc.name %></span>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-lg-2" style="padding-bottom: 10px;">
+        <span><strong>Sub process group:</strong></span>
+      </div>
+      <div class="col-lg-4">
+        <span> <%= SubprocessGroup.find_by_id(@project_document.pmbok_doc.subprocess_group_id).code %>
+          - <%= SubprocessGroup.find_by_id(@project_document.pmbok_doc.subprocess_group_id).name %></span>
+      </div>
+      <div class="col-lg-2">
+        <span><strong>Last version:</strong></span>
+      </div>
+      <div class="col-lg-3">
+        <span><%= @project_document.last_version %></span>
+      </div>
+    </div>
+    <div class="row">
+      <% if @project_document.pmbok_doc.templates.size > 0 %>
+
+       <% @project_document.pmbok_doc.templates.each do |ea| %>
+       <div class="col-lg-2" style="padding-bottom: 10px;">
+            <span><strong>Template:</strong></span>
+       </div>
+
+       <div class="col-lg-10">
+            <span><%= ea.document_file_name %> &nbsp; &nbsp;
+              <%= link_to 'DOWNLOAD', ea.document.url(:original, false), :target => "_blank", :class => "btn btn-primary btn-xs" %>
+            </span>
+      </div>
+      <% end %>
+
+      <% else %>
+          <div class="col-lg-2" style="padding-bottom: 10px;">
+            <span><strong>Template:</strong></span>
+          </div>
+          <div class="col-lg-10">
+            <span style="font-style: italic; color: lightcoral;">No template is available yet for this document.</span>
+          </div>
+      <% end %>
+    </div>
+  </div>
+
+  <h4><strong>Workfow</strong></h4>
+  <% if @inputs.size > 0 %>
+      <div class="well">
+        <h4><strong>Inputs</strong></h4>
+        <table class="table">
+          <thead>
+          <tr>
+            <th>During the Process of</th>
+            <th>Input this document</th>
+            <th>to</th>
+            <th colspan="1"></th>
+          </tr>
+          </thead>
+
+          <tbody>
+          <% @inputs.each do |ea| %>
+              <tr>
+                <td style="width: 30%;"><%= SubprocessGroup.find_by_id(ea.subprocess_group_id).code %>
+                  - <%= SubprocessGroup.find_by_id(ea.subprocess_group_id).name %></td>
+                <td style="width: 40%;">
+                  <% @doc=@project.project_documents.where('pmbok_doc_id = ? ', ea.inputdocument_id).pluck(:docname) %>
+                  <% @doc_id=@project.project_documents.where('pmbok_doc_id = ? ', ea.inputdocument_id).pluck(:id) %>
+                  <u><%= link_to @doc[0], project_project_document_path(@project, @doc_id[0]) %></u>
+                </td>
+                <td><%= ea.task %></td>
+                <td>
+
+                  <% document_gid = @project.project_documents.find_by_id(@doc_id[0]).document_gid
+                     if !document_gid.nil?
+                  %>
+                      <%= button_to 'DOWNLOAD', gitFile_path(@project.id, document_gid.nil? ? '0' : document_gid), :method => :get, :class => "btn btn-primary" %>
+                  <% end %>
+                </td>
+              </tr>
+          <% end %>
+
+          </tbody>
+        </table>
+      </div>
+  <% else %>
+      <div class="well">
+            <span style="font-style: italic; color: lightcoral">No Input workflow is defined yet for this document type</span>
+      </div>
+  <% end %>
+
+
+  <!--
+  <% if @outputs.size > 0 %>
+      <div class="well">
+        <h4><strong>Outputs</strong></h4>
+        <table class="table">
+          <thead>
+          <tr>
+            <th>During the Process of</th>
+            <th>Used To</th>
+            <th>This document</th>
+            <th colspan="1"></th>
+
+
+          </tr>
+          </thead>
+
+          <tbody>
+          <% @outputs.each do |ea| %>
+              <tr>
+                <td style="width: 30%;"><%= SubprocessGroup.find_by_id(ea.subprocess_group_id).code %>
+                  - <%= SubprocessGroup.find_by_id(ea.subprocess_group_id).name %></td>
+                <td><%= ea.task %></td>
+
+                <td style="width: 30%;">
+                  <% @doc=@project.project_documents.where('pmbok_doc_id = ? ', ea.outputdocument_id).pluck(:docname) %>
+                  <% @doc_id=@project.project_documents.where('pmbok_doc_id = ? ', ea.outputdocument_id).pluck(:id) %>
+                  <u><%= link_to @doc[0], project_project_document_path(@project, @doc_id[0]) %></u>
+                </td>
+                <td>
+                  <div class="input-group">
+                    <div class="form-inline">
+                      <%= form_for @dataFile, :url => data_file_create_path(@project.id, @doc_id[0]), :html => {:multipart => true} do |f| %>
+
+
+                          <%= f.file_field :document, class: 'filestyle',
+                                           :'data-classButton' => 'btn btn-primary',
+                                           :'data-input' => 'false', classIcon: 'icon-plus',
+                                           :'data-buttonText' => 'Browse' %>
+
+                          <%= f.submit 'UPLOAD', :class => "btn btn-success" %>
+
+
+                      <% end %>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+          <% end %>
+
+          </tbody>
+        </table>
+      </div>
+  <% else %>
+      <div class="well">
+        <span style="font-style: italic; color: lightcoral">No output workflow is defined yet for this document type</span>
+      </div>
+
+  <% end %>
+  -->
+
+
+
+  <h4><strong>Document History</strong></h4>
+  <div class="well">
+    <%= render :partial =>  'version/index', :document_id => @project_document.id %>
+  </div>
+
+  <h4><strong>Tasks on This document</strong></h4>
+  <div class="well">
+    <%= render 'tasks/index', :project_document_id => @project_document.id  %>
+  </div>
+
+  <%= button_to 'Manage document', manage_document_path(@project_document.project_id), :class => "btn btn-danger", :method => :get %>
+
+</div>
+
+

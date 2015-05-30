@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  code: MyString
+  name: MyString
+  process_group_id: 
+  knowledge_area_id: 
+
+two:
+  code: MyString
+  name: MyString
+  process_group_id: 
+  knowledge_area_id: 

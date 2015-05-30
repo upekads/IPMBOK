@@ -1,0 +1,97 @@
+<div class="container">
+  <div class="page-header">
+    <h1><%= @pmbok_doc.name %></h1>
+  </div>
+
+
+  <h4>Sub process group of:
+    <%= SubprocessGroup.find_by_id(@pmbok_doc.subprocess_group_id).code %>
+     - <%= SubprocessGroup.find_by_id(@pmbok_doc.subprocess_group_id).name %></h4>
+  <br>
+  <h4><strong>Workfow of this document</strong></h4>
+  <% if @inputs.size > 0 %>
+    <div class="well">
+      <h4><strong>Inputs</strong></h4>
+      <table class="table">
+        <thead>
+        <tr>
+          <th>During the Process of</th>
+          <th>Input this document</th>
+          <th>to</th>
+          <th colspan="1"></th>
+        </tr>
+        </thead>
+
+        <tbody>
+        <% @inputs.each do |ea| %>
+            <tr>
+              <td style="width: 30%"><%= SubprocessGroup.find_by_id(ea.subprocess_group_id).code %>
+                - <%= SubprocessGroup.find_by_id(ea.subprocess_group_id).name %></td>
+              <td  style="width: 30%"><%= PmbokDoc.find_by_id(ea.inputdocument_id).name %></td>
+              <td ><%= ea.task %></td>
+
+
+            </tr>
+        <% end %>
+
+        </tbody>
+      </table>
+    </div>
+<% else %>
+    <div class="well">
+      <span style="font-style: italic; color: lightcoral">No Input workflow is defined yet for this document type</span>
+    </div>
+<% end %>
+
+<% if @outputs.size > 0 %>
+    <div class="well">
+      <h4><strong>Outputs</strong></h4>
+      <table class="table">
+        <thead>
+        <tr>
+          <th>During the Process of</th>
+          <th>Used To</th>
+          <th>This document</th>
+          <th colspan="1"></th>
+
+
+        </tr>
+        </thead>
+
+        <tbody>
+        <% @outputs.each do |ea| %>
+            <tr>
+              <td  style="width: 30%"><%= SubprocessGroup.find_by_id(ea.subprocess_group_id).code %>
+                - <%= SubprocessGroup.find_by_id(ea.subprocess_group_id).name %></td>
+              <td  style="width: 30%"><%= ea.task %></td>
+              <td ><%= PmbokDoc.find_by_id(ea.outputdocument_id).name %></td>
+
+
+            </tr>
+        <% end %>
+
+        </tbody>
+      </table>
+    </div>
+<% else %>
+    <div class="well">
+      <span style="font-style: italic; color: lightcoral">No output workflow is defined yet for this document type</span>
+    </div>
+
+<% end %>
+
+
+
+
+
+
+
+
+
+
+
+  <%= button_to 'Back', pmbok_docs_path, :class => "btn btn-danger", :method => :get %>
+
+</div>
+
+

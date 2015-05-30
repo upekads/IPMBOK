@@ -1,0 +1,33 @@
+<%= form_for(@subprocess_group) do |f| %>
+  <% if @subprocess_group.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@subprocess_group.errors.count, "error") %> prohibited this subprocess_group from being saved:</h2>
+
+      <ul>
+      <% @subprocess_group.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :name %><br>
+    <%= f.text_field :name %>
+  </div>
+  <div class="field">
+    <%= f.label :code %><br>
+    <%= f.text_field :code %>
+  </div>
+  <div class="field">
+    <%= f.label :process_group_id %><br>
+    <%= f.collection_select(:process_group_id,  ProcessGroup.all, :id, :name) %>
+  </div>
+  <div class="field">
+    <%= f.label :knowledge_area_id %><br>
+    <%= f.collection_select(:knowledge_area_id,  KnowledgeArea.all, :id, :name) %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

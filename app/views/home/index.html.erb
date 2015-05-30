@@ -1,0 +1,87 @@
+<!-- Carousel ==================================================
+<div id="myCarousel" class="carousel slide" data-ride="carousel">
+  <ol class="carousel-indicators">
+    <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+    <li data-target="#myCarousel" data-slide-to="1"></li>
+  </ol>
+  <div class="carousel-inner">
+    <div class="item active">
+      <div class="container">
+        <div class="carousel-caption">
+
+          <h1><img src="/transparentlogo.gif" alt="Icon" height="100" width="150" /></h1>
+
+          <p><a class="btn btn-lg btn-primary" href="#" role="button">Group-01</a></p>
+        </div>
+      </div>
+    </div>
+    <div class="item">
+      <div class="container">
+        <div class="carousel-caption">
+          <h1>Best practices from PMBoK 5th Edition</h1>
+          <p>
+            Manage your project documents according to PMBoK Guide and standards as defined by Project Management Institute(PMI)
+          </p>
+          <p><a class="btn btn-lg btn-primary" href="#" role="button">ISDM</a></p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
+    <span class="glyphicon glyphicon-chevron-left"></span>
+  </a>
+  <a class="right carousel-control" href="#myCarousel" role="button" data-slide="next">
+    <span class="glyphicon glyphicon-chevron-right"></span>
+  </a>
+</div> -->
+
+<div class="container">
+  <br><br>
+<div class="jumbotron">
+  <h1><img src="/transparentlogo.gif" alt="Icon" height="100" width="150" /></h1>
+  <p>
+    Manage your project documents according to PMBoK Guide and standards as defined by Project Management Institute(PMI)
+  </p>
+  <p><a class="btn btn-primary btn-lg" href="#" role="button">Group-01</a></p>
+</div>
+
+  <% if isUserSigned? %>
+
+  <div class="row">
+    <div class="col-sm-6 col-md-8">
+
+      <h3>Tasks</h3>
+      <table class="table table-hover table-striped" id="task_table">
+        <thead>
+            <th>Deadline</th>
+            <th>Project</th>
+            <th>Document name</th>
+            <th>Status</th>
+            <th>Assigned by</th>
+
+        </thead>
+        <tbody>
+        <% if @tasks.count == 0 %>
+            <tr><td colspan="4"><span style="font-style: italic; color: lightcoral;">No tasks are pending for you.</span></td></tr>
+        <% else %>
+
+            <% @tasks.each do |task| %>
+                <tr>
+                  <td><%= task.deadline.strftime("%d/%m/%Y") %></td>
+                  <td><%= Project.find(ProjectDocument.find(task.project_document_id).project_id).name %></td>
+                  <td><%= ProjectDocument.find(task.project_document_id).docname %></td>
+                  <td><%= task.status %></td>
+                  <td><%= User.find(task.assigned_id).email %></td>
+                  <td>
+                    <%= link_to project_project_document_path(ProjectDocument.find(task.project_document_id).project_id,ProjectDocument.find(task.project_document_id).id), :class => "btn", :method => :get do %>
+                        <span class="glyphicon glyphicon-list" title="View detail"></span>
+                    <% end %></td>
+                </tr>
+            <% end %>
+        <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+ <% end %>
+</div>

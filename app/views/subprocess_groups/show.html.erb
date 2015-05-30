@@ -1,0 +1,24 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @subprocess_group.name %>
+</p>
+
+<p>
+  <strong>Code:</strong>
+  <%= @subprocess_group.code %>
+</p>
+
+<p>
+  <strong>Process group:</strong>
+  <%= @subprocess_group.process_group %>
+</p>
+
+<p>
+  <strong>Knowledge area:</strong>
+  <%= @subprocess_group.knowledge_area %>
+</p>
+
+<%= link_to 'Edit', edit_subprocess_group_path(@subprocess_group) %> |
+<%= link_to 'Back', subprocess_groups_path %>

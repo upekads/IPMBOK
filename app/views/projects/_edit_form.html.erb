@@ -1,0 +1,58 @@
+
+  <%= form_for(@project, html: {class: "form-horizontal"}) do |f| %>
+      <% if @project.errors.any? %>
+          <div id="error_explanation">
+            <h2><%= pluralize(@project.errors.count, "error") %> prohibited this project from being saved:</h2>
+
+            <ul>
+              <% @project.errors.full_messages.each do |message| %>
+                  <li><%= message %></li>
+              <% end %>
+            </ul>
+          </div>
+      <% end %>
+
+
+      <div class="form-group">
+        <div class="col-lg-2"><%= f.label :Project_Code %></div>
+        <div class="col-lg-2"><%= f.text_field :projectcode, :class => "form-control" %></div>
+      </div>
+      <div class="form-group">
+        <div class="col-lg-2"><%= f.label :Project_Name %></div>
+        <div class="col-lg-2"><%= f.text_field :name, :class => "form-control" %></div>
+      </div>
+      <div class="form-group">
+        <div class="col-lg-2"><%= f.label :Start_date %></div>
+        <div class="col-lg-4"><%= f.date_select :start_date, :class => "form-control" %></div>
+      </div>
+      <div class="form-group">
+        <div class="col-lg-2"><%= f.label :End_date %></div>
+        <div class="col-lg-5"><%= f.date_select :end_date, :class => "form-control" %></div>
+      </div>
+      <div class="form-group">
+        <div class="col-lg-2"><%= f.label :Status %></div>
+        <div class="col-lg-5"> <%= f.select :status, ['In Progress', 'Suspended', 'Completed'] %></div>
+      </div>
+
+      <div class="form-group">
+        <div class="col-lg-2"><%= f.label :Description %></div>
+        <div class="col-lg-5"><%= f.text_area :description, :class => "form-control" %></div>
+      </div>
+
+      <div class="form-group">
+        <div class="col-lg-6  text-left">
+          <%= f.submit "Submit", :class => "btn btn-primary" %>
+          <%= link_to 'Back', projects_path, :class => "btn btn-danger", :method => :get %>
+        </div>
+        <div class="col-lg-6"></div>
+      </div>
+
+  <% end %>
+
+
+
+
+
+
+
+

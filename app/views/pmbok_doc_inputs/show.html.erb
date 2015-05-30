@@ -1,0 +1,19 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Subprocess group:</strong>
+  <%= @pmbok_doc_input.subprocess_group %>
+</p>
+
+<p>
+  <strong>Document:</strong>
+  <%= @pmbok_doc_input.document_id %>
+</p>
+
+<p>
+  <strong>Inputdocument:</strong>
+  <%= @pmbok_doc_input.inputdocument_id %>
+</p>
+
+<%= link_to 'Edit', edit_pmbok_doc_input_path(@pmbok_doc_input) %> |
+<%= link_to 'Back', pmbok_doc_inputs_path %>

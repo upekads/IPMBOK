@@ -1,0 +1,13 @@
+<table class="table">
+  <tbody>
+  <tr>
+    <td style="border: none; width: 20%;"><%= f.label :New_Project_Manager %></td>
+    <td style="border: none;"><%= f.collection_select(:user_id,  User.all, :id, :email) %></td>
+  </tr>
+  </tbody>
+</table>
+<div class="field">
+  <%= f.hidden_field :project_role_id, :value => @project_manager_role.id %>
+</div>
+
+

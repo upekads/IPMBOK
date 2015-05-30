@@ -1,0 +1,27 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Process Groups</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @process_groups.each do |process_group| %>
+      <tr>
+        <td><%= process_group.name %></td>
+        <td><%= link_to 'Show', process_group %></td>
+        <td><%= link_to 'Edit', edit_process_group_path(process_group) %></td>
+        <td><%= link_to 'Destroy', process_group, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Process group', new_process_group_path %>
